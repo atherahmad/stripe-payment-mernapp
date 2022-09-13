@@ -11,7 +11,6 @@ dotenv.config()
 app.use(express.json())
 app.use(cors())
 
-console.log(process.env.STRIPE_SECRET_KEY);
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -29,8 +28,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 app.post("/sripe-payment", (req, res) => {
 
     const {product, token} = req.body
-    console.log("Product", product);
-    console.log("Price", product.price);
+
 
     const idempotencyKey = uuidv4() // it keeps record that user is not charged twice for the same product
 
