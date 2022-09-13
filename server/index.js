@@ -32,7 +32,7 @@ app.post("/sripe-payment", (req, res) => {
     console.log("Product", product);
     console.log("Price", product.price);
 
-    const idempontencyKey = uuidv4() // it keeps record that user is not charged twice for the same product
+    const idempotencyKey = uuidv4() // it keeps record that user is not charged twice for the same product
 
     return stripe.customers.create({
         email : token.email,
@@ -51,6 +51,8 @@ app.post("/sripe-payment", (req, res) => {
             }
         } 
 
+    }, {
+        idempotencyKey
     }))
     .then(result => res.status(200).json(result))
     .catch(err => console.log(err))
